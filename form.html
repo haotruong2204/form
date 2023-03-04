@@ -1,0 +1,103 @@
+<div id="modalPopup">
+	<div class="modalPopup-content">
+	<span id="modalPopup-close" class="modalPopup-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+		<div style="background: #f9f6d1;padding: 10px; border-radius: 6px;">
+      <div style="font-size: 16px; font-weight: 600; color: #800000; margin-top: 5px; margin-bottom: 8px; text-align: center;">ĐĂNG KÝ NHẬN THÔNG TIN KHI CÓ HÀNG</div>
+      <p style="font-style: italic;">
+        Mình là Minh Hương sống tại Berlin - Đức, mình chuyên cung cấp và order các sản phẩm từ Đức. Các bạn có nhu cầu tìm hoặc mua sản phẩm từ Đức thì để lại thông tin mình hỗ trợ nha. Mình cảm ơn
+      </p>
+      <form id="contact_form" action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSdPiVYgZOfjW-RzaL4WLnmFoOTn05GSh4a5NrJSu_jvzRTjFw/formResponse">
+        <div class="form_web clearfix" id="form_contact">
+          <!--<div class="row_account clearfix">
+            <label class="item_title">Email Address*</label>
+            <div class="row_input">
+              <input type="email" required placeholder="Email Address" id="contact_email" name="entry.1748004566" class="inputbox" />
+            </div>
+          </div>-->
+          <div class="row_account clearfix">
+            <label class="item_title">Họ và tên*</label>
+            <div class="row_input">
+              <input id="contact_name" placeholder="Họ và tên" required name="entry.1908227588" class="inputbox" />
+            </div>
+          </div>
+          <div class="row_account clearfix">
+            <label class="item_title">Số điện thoại*</label>
+            <div class="row_input">
+              <input id="contact_phone" type="tel" pattern="\+?\(?\d{2,4}\)?[\d\s-]{3,}" placeholder="Số điện thoại của bạn" maxlength="11" required name="entry.1459126318" class="inputbox" />
+            </div>
+          </div>
+          <div class="row_account clearfix">
+            <label class="item_title">Địa chỉ*</label>
+            <div class="row_input">
+              <input id="contact_address" placeholder="Địa chỉ" required name="entry.63106895" class="inputbox" />
+            </div>
+          </div>
+          <div class="row_account clearfix">
+            <label class="item_title">Url sản phẩm khi order*</label>
+            <div class="row_input">
+              <input id="contact_note" placeholder="Url sản phẩm khi order" required name="entry.432463124" class="inputbox" />
+            </div>
+          </div>
+          <!--<div class="row_account clearfix">
+            <label class="item_title">Ngày lấy hàng*</label>
+            <div class="row_input">
+              <input id="contact_date" type="date" required placeholder="Ngày lấy hàng" name="entry.1537287036" class="inputbox"/>
+            </div>
+            <input type="hidden" required placeholder="Ghi chú" name="entry.432463124" val="Sản phẩm: {{ product.title }} - {{ shop.url | append: product.url }}" class="inputbox"/>
+            
+          </div>-->
+          <div class="row_account clearfix" align="right">
+            <input type="submit" value="Đăng ký " name="btnSend" class="btn_web btn_send" />
+          </div>
+          </div>
+          </form>
+    </div>
+	</div>
+</div>
+<style>
+    div#form_contact input {
+      width: 100%;
+    }
+    #contact_form .row_account {
+      margin-top: 15px;
+    }
+    #contact_form .btn_send {
+      background: #cd1818;
+      border: 1px solid #cd1818;color: #fff;
+    }
+    @media (max-width: 767px){
+      #contact_form .row_account {
+        width: 100%;
+      }
+    }
+</style>
+<script>
+  $('#contact_form').on('submit',function(e){
+    e.preventDefault();
+    var that = $(this);
+    var unindexed_array = that.serializeArray();
+    var indexed_array = {};
+    $.map(unindexed_array, function(n, i){
+      indexed_array[n['name']] = n['value'];
+    });
+    var urlResponse = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSdPiVYgZOfjW-RzaL4WLnmFoOTn05GSh4a5NrJSu_jvzRTjFw/formResponse"
+    $.ajax({
+      type: 'POST',
+      url: urlResponse,
+      async : false,
+      data: indexed_array,
+      dataType: 'json',
+      complete: function() {
+        alert('Thông tin gửi thành công!');
+        that.trigger('reset');
+      },
+      error: function(XMLHttpRequest, textStatus) {
+        console.log('err', textStatus );
+      }
+    });
+  });
+  $('#modalPopup-close').click(function(){
+    $('#modalPopup').hide();
+  })
+</script>
+
